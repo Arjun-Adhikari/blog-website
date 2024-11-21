@@ -1,11 +1,11 @@
 const Listing = require("../models/user.js");
-
+//this is module
 module.exports.updatelisting = async (req, res) => {
     let { id } = req.params;
     let { subject: newSubject, date: newDate, title: newTitle, description: newDescription } = req.body;
     let updatedListing = await Listing.findByIdAndUpdate(id, { subject: newSubject, date: newDate, title: newTitle, description: newDescription }, { runValidator: true, new: true });
     res.redirect('/listing');
-}
+};
 
 module.exports.editlisting = async (req, res) => {
     let { id } = req.params;
@@ -33,7 +33,7 @@ module.exports.postnewlisting = async (req, res) => {
     }).catch((err) => {
         console.log(err);
     })
-    res.redirect('/listing')
+    res.redirect('/listing');
 }
 
 module.exports.showeachid = async (req, res) => {
