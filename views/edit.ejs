@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit listing</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+
+<body>
+    <h1>Edit existing listing</h1>
+    <form action="/listing/<%=listing._id%>?_method=PUT" method="post">
+        <div style="display:flex; flex-direction: column; width:200px;">
+            <input type="text" value="<%=listing.subject%>" name="subject">
+            <input type="text" value="<%=listing.date%>" name="date">
+            <input type="text" value="<%=listing.title%>" name="title">
+            <textarea name="description"><%=listing.description%></textarea>
+            <button>Submit</button>
+        </div>
+    </form>
+</body>
+
+
+
+</html>

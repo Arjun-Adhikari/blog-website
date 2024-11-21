@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog template</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+
+<body>
+    <h1 class="table-of-contents">TABLE OF CONTENTS</h1>
+    <form class="blog-form" action="/posts/new" method="get">
+        <button>create new blog</button>
+    </form>
+
+    <div class="blog-container">
+        <% for(let blog of blogs){ %>
+            <h1 class="blog-heading">#
+                <%=blog.heading%>
+            </h1>
+            <div class="blog-body">
+                &rightarrow;<%=blog.body%>
+            </div>
+            <div class="customize-blog">
+                <form action="/posts/<%=blog._id%>/edit" method="get">
+                    <button>Edit Blog</button>
+                </form>
+
+                <form action="/posts/<%=blog._id%>?_method=DELETE" method="post">
+                    <button>Delete Blog</button>
+                </form>
+            </div>
+            <% } %>
+    </div>
+</body>
+
+</html>

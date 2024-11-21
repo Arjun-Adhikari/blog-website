@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New listing</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+
+<body>
+    <h1>New listing</h1>
+    <form action="/listing/new" method="post">
+        <div style="display:flex; flex-direction: column; width:200px;">
+            <input type="text" placeholder="enter subject" name="subject">
+            <input type="text" placeholder="enter date" name="date">
+            <input type="text" placeholder="enter title" name="title">
+            <textarea placeholder="enter your description" name="description"></textarea>
+            <button>Create new listing</button>
+        </div>
+    </form>
+</body>
+
+</html>

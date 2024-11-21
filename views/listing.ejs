@@ -1,0 +1,21 @@
+<% layout('layouts/boilerplate.ejs') -%>
+
+    <body>
+        <form action="/listing/new" method="get">
+            <button>create-new-listing</button>
+        </form>
+        <br>
+
+        <div class="alllistings">
+            <h2>Title Area of blogs</h2>
+            <% for(let listing of listings){ %>
+                <div style="display: inline-block;scroll-behavior: smooth;">
+                    <form action="listing/<%=listing._id%>/showeach" method="get">
+                        <button>
+                            <%=listing.subject%>
+                        </button>
+                    </form>
+                </div>
+                <% } %>
+        </div>
+    </body>
