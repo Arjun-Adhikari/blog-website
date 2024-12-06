@@ -1,0 +1,17 @@
+<% layout('layouts/boilerplate.ejs') -%>
+
+    <body>
+        <br>
+        <div class="alllistings">
+            <h2>Title Area oF Blogs</h2>
+            <% for(let blog of blogs){ %>
+                <div style="display: inline-block;scroll-behavior: smooth;">
+                    <a href="/posts">
+                        <button>
+                            <%=blog.heading%>
+                        </button>
+                    </a>
+                </div>
+                <% } %>
+        </div>
+    </body>

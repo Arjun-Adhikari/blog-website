@@ -1,19 +1,15 @@
-
 const express = require('express');
 const router = express.Router();
-const passport = require("passport");
-
 const loginController = require('../controllers/login.js');
-//getsignup
-router.get('/user/signup', loginController.getsignup);
+const { Authenticate } = require('../middleware.js');
+const wrapAsync = require('../utils/wrapAsync.js');
 
-//postsignup
-router.post('/user/signup', loginController.postsignup);
+// Signup routes
+router.get('/user/signup', wrapAsync(loginController.getsignup));
+router.post('/user/signup', wrapAsync(loginController.postsignup));
 
-//getlogin
-router.get('/user/login', loginController.getlogin);
-
-//postlogin
-router.post('/user/login', passport.authenticate('local', { failureRedirect: '/login' }), loginController.postlogin);
+// Login routes
+router.get('/user/login', wrapAsync(loginController.getlogin));
+router.post('/user/login', Authenticate, wrapAsync(loginController.postlogin));
 
 module.exports = router;

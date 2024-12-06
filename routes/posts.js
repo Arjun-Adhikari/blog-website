@@ -1,23 +1,31 @@
 const express = require('express');
 const router = express.Router();
-
 const postsController = require('../controllers/posts.js');
-//postsaveblog
-router.post('/posts/new', postsController.postsaveblog);
+const { isLoggedIn, fetchBlogs } = require('../middleware.js');
+const wrapAsync = require('../utils/wrapAsync.js');
 
-//getrenderblog
-router.get('/posts/new', postsController.getrenderblog);
+// Save blog
+router.post('/posts/new', isLoggedIn, wrapAsync(postsController.postsaveblog));
 
-//getfindblog
-router.get('/posts', postsController.getfindblog);
+// Render new blog form
+router.get('/posts/new', isLoggedIn, wrapAsync(postsController.getrenderblog));
 
-//getfindbyidblog
-router.get('/posts/:id/edit', postsController.getfindbyidblog);
+// Get and render blogs
+router.get('/posts', isLoggedIn, fetchBlogs, wrapAsync(postsController.getfindblog));
 
-//postupdateblog
-router.post('/posts/:id', postsController.postupdateblog);
+// Edit blog by ID
+router.get('/posts/:id/edit', isLoggedIn, wrapAsync(postsController.getfindbyidblog));
 
-//deleteblog
-router.delete('/posts/:id', postsController.deleteblog);
+// Update blog by ID
+router.post('/posts/:id', isLoggedIn, wrapAsync(postsController.postupdateblog));
+
+// Delete blog by ID
+router.delete('/posts/:id', isLoggedIn, wrapAsync(postsController.deleteblog));
+
+// Render blogs with only names
+router.get('/posts/onlyname', isLoggedIn, fetchBlogs, wrapAsync(postsController.onlyname));
+
+// Home route
+router.get('/', isLoggedIn, wrapAsync(postsController.homeroute));
 
 module.exports = router;

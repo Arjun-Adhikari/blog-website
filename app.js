@@ -1,81 +1,60 @@
 const express = require('express');
+const app = express();
 const mongoose = require('mongoose');
 const path = require('path');
-const Listing = require("./models/user.js");
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
-const blog = require('./models/blogtemp.js');
 const session = require('express-session');
 const passport = require('passport');
+const bodyParser = require('body-parser');
 
-const localStrategy = require('passport-local');
-const login = require('./models/login.js');
+const localStrategy = require('passport-local').Strategy;
+const loginSchema = require('./models/login.js');
 
-const app = express();
+// Routes
+const posts = require('./routes/posts.js');
+const user = require('./routes/login.js');
 
-//session
+// Setting paths
+app.use(express.static(path.join(__dirname, 'public')));
+app.set('views', path.join(__dirname, 'views'));
+
+// Middleware setup
+app.use(express.urlencoded({ extended: true }));
+app.engine('ejs', ejsMate);
+app.use(bodyParser.json());
+app.set('view engine', 'ejs');
+app.use(methodOverride('_method'));
+
+// Session setup
 const sessionProperty = {
     secret: 'kxababukbr',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true }
+    cookie: { secure: false }
 };
 app.use(session(sessionProperty));
-//session setup
 
-//routes
-const listing = require('./routes/listing.js');
-const posts = require('./routes/posts.js');
-const user = require('./routes/login.js');
-
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, '/public')));
-app.use(methodOverride('_method'));
-app.engine('ejs', ejsMate);
-//this is of routes
-app.use('/', listing);
-app.use('/', posts);
-app.use('/', user);//this is the login.js routes.
-
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-
-//initialize passport and use session
-
-
+// Initialize passport and use session
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.use(new localStrategy(login.authenticate()));
-passport.serializeUser(login.serializeUser());
-passport.deserializeUser(login.deserializeUser());
+// Local authentication
+passport.use(new localStrategy(loginSchema.authenticate()));
+passport.serializeUser(loginSchema.serializeUser());
+passport.deserializeUser(loginSchema.deserializeUser());
 
-main()
-    .then(() => {
-        console.log("mongoose is starting");
-    })
-    .catch(err => console.log(err));
+// Use routes
+app.use('/', posts);
+app.use('/', user);
 
 async function main() {
     await mongoose.connect('mongodb://127.0.0.1:27017/blog');
+    console.log("Mongoose is starting");
 }
+main().catch(err => console.log(err));
 
-//implemmeting the listing schema
-let newlisting = new Listing({
-    subject: "personal gain",
-    date: 201,
-    title: "how to make blogs",
-    description: "making blogs is so easy",
-});
-newlisting.save();
-
-//implemmeting the blog schema
-let newblog = new blog({
-    heading: "heading of the blog",
-    body: "description of the blog",
-});
-newblog.save();
-
+// Listening port
 app.listen(3000, () => {
-    console.log("port is listening on 3000");
+    console.log("Port is listening on 3000");
 });
