@@ -17,24 +17,26 @@
         <button>Home</button>
     </a>
 
+    <a href="/user/login">Admin login</a>
+
     <div class="blog-container">
         <% for(let blog of blogs){ %>
             <h1 class="blog-heading">#
                 <%=blog.heading%>
             </h1>
-            <div class="blog-body">
-                &rightarrow;<%=blog.body%>
+            <div class="blog-body">&rightarrow;<%=blog.body%>
             </div>
-            <div class="customize-blog">
-                <form action="/posts/<%=blog._id%>/edit" method="get">
-                    <button>Edit Blog</button>
-                </form>
-
-                <form action="/posts/<%=blog._id%>?_method=DELETE" method="post">
-                    <button>Delete Blog</button>
-                </form>
-            </div>
-            <% } %>
+            <%if(loggedin) {%>
+                <div class="customize-blog">
+                    <form action="/posts/<%=blog._id%>/edit" method="get">
+                        <button>Edit Blog</button>
+                    </form>
+                    <form action="/posts/<%=blog._id%>?_method=DELETE" method="post">
+                        <button>Delete Blog</button>
+                    </form>
+                </div>
+                <%}%>
+                    <% } %>
     </div>
 </body>
 

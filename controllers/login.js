@@ -22,8 +22,9 @@ module.exports.getlogin = (req, res) => {
     res.render('login.ejs');
 };
 
+//imp
 module.exports.postlogin = (req, res) => {
-    res.redirect('/posts');
+    res.redirect('/post');
 };
 
 module.exports.postlogout = (req, res, next) => {

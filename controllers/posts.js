@@ -18,11 +18,16 @@ module.exports.getrenderblog = (req, res) => {
     res.render('postnew.ejs');
 };
 
+
 module.exports.getfindblog = (req, res) => {
+    //getting query from the routes
+    const loggedin = req.query.loggedin === 'yes';
+    console.log(loggedin);
     const blogs = req.blogs; // Access blogs from req object 
     console.log("blogs");
-    res.render('posts.ejs', { blogs });
+    res.render('posts.ejs', { blogs,loggedin});
 };
+
 
 module.exports.getfindbyidblog = async (req, res, next) => {
     try {
@@ -58,6 +63,7 @@ module.exports.deleteblog = async (req, res, next) => {
     }
 };
 
+//important
 module.exports.onlyname = (req, res) => {
     const blogs = req.blogs; // Access blogs from req object 
     console.log("blogs");

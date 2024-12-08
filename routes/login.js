@@ -10,6 +10,6 @@ router.post('/user/signup', wrapAsync(loginController.postsignup));
 
 // Login routes
 router.get('/user/login', wrapAsync(loginController.getlogin));
-router.post('/user/login', Authenticate, wrapAsync(loginController.postlogin));
+router.post('/user/login', Authenticate, wrapAsync(loginController.postlogin));//imp
 
 module.exports = router;

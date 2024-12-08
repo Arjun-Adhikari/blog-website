@@ -10,7 +10,7 @@ module.exports.isLoggedIn = (req, res, next) => {
 
 // For authentication
 module.exports.Authenticate = passport.authenticate('local', { 
-    successRedirect: '/posts/onlyname',
+    successRedirect: '/posts?loggedin=yes',
     failureRedirect: '/login',
 });
 
